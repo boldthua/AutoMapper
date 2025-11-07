@@ -14,8 +14,10 @@ namespace AutoMapper
         public double _Height { get; set; }
         public double _Weight { get; set; }
         public PositionType _Position { get; set; }
+        public List<string> _Scores { get; set; }
+        public string[] _Subjects { get; set; }
 
-        public StudentDAO(string ID, string Name, string PhoneNumber, double height, double weight, PositionType position)
+        public StudentDAO(string ID, string Name, string PhoneNumber, double height, double weight, PositionType position, List<string> scores, string[] subjects)
         {
             _ID = ID;
             _Name = Name;
@@ -23,6 +25,8 @@ namespace AutoMapper
             _Height = height;
             _Weight = weight;
             _Position = position;
+            _Scores = scores;
+            _Subjects = subjects;
         }
         public StudentDAO() { }
     }

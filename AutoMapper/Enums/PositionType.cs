@@ -13,6 +13,5 @@ namespace AutoMapper
         風紀股長 = 3,
         衛生股長 = 4,
         抓爬子 = 5
-
     }
 }
