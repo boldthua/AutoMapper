@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoMapper
+namespace AutoMapper.Transformers
 {
-    internal class StudentDTO
+    internal class ObjectOfDTO
     {
         public string _ID { get; set; }
         public string _Name { get; set; }
         public string _PhoneNumber { get; set; }
-        public int _Height { get; set; }
-        public int _Weight { get; set; }
-        public int _Position { get; set; }
-        public ObservableCollection<int> _Scores { get; set; }
-        public int[] _Subjects { get; set; }
-        public StudentDTO(string ID, string Name, string PhoneNumber, int height, int weight, int position, ObservableCollection<int> scores, int[] subjects)
+        public double _Height { get; set; }
+        public double _Weight { get; set; }
+        public PositionType _Position { get; set; }
+        public List<string> _Scores { get; set; }
+        public string[] _Subjects { get; set; }
+
+        public ObjectOfDTO(string ID, string Name, string PhoneNumber, double height, double weight, PositionType position, List<string> scores, string[] subjects)
         {
             _ID = ID;
             _Name = Name;
@@ -28,6 +28,6 @@ namespace AutoMapper
             _Scores = scores;
             _Subjects = subjects;
         }
-        public StudentDTO() { }
+        public ObjectOfDTO() { }
     }
 }

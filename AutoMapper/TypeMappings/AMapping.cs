@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoMapper.TypeMappings
 {
-    internal abstract class AMapping
+    public abstract class AMapping
     {
         public abstract object Map(object data, Type sourcePropType, Type destPropType);
     }

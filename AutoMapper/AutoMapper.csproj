@@ -48,8 +48,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\PropTypes.cs" />
-    <Compile Include="StudentDTO.cs" />
-    <Compile Include="StudentDAO.cs" />
+    <Compile Include="Transformers\ObjectOfDAO.cs" />
+    <Compile Include="Transformers\ObjectOfDTO.cs" />
+    <Compile Include="Transformers\StudentDTO.cs" />
+    <Compile Include="Transformers\StudentDAO.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
     <Compile Include="TypeMappings\AMapping.cs" />
     <Compile Include="TypeMappings\MapBasic.cs" />

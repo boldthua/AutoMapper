@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoMapper.TypeMappings
 {
-    internal class MapArray : AMapping
+    public class MapArray : AMapping
     {
         public override object Map(object data, Type sourcePropType, Type destPropType)
         {

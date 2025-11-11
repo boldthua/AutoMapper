@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoMapper
+namespace AutoMapper.Transformers
 {
-    internal class StudentDAO
+    internal class ObjectOfDAO
     {
         public string _ID { get; set; }
         public string _Name { get; set; }
@@ -17,7 +17,7 @@ namespace AutoMapper
         public List<string> _Scores { get; set; }
         public string[] _Subjects { get; set; }
 
-        public StudentDAO(string ID, string Name, string PhoneNumber, double height, double weight, PositionType position, List<string> scores, string[] subjects)
+        public ObjectOfDAO(string ID, string Name, string PhoneNumber, double height, double weight, PositionType position, List<string> scores, string[] subjects)
         {
             _ID = ID;
             _Name = Name;
@@ -28,6 +28,6 @@ namespace AutoMapper
             _Scores = scores;
             _Subjects = subjects;
         }
-        public StudentDAO() { }
+        public ObjectOfDAO() { }
     }
 }

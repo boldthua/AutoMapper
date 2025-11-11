@@ -11,19 +11,21 @@ namespace AutoMapper
     {
         internal static PropTypes CheckType(this Type propertyType)
         {
-            if (propertyType.IsArray)
-                return PropTypes.Array;
-            else if (propertyType != typeof(string) && propertyType.GetInterfaces()
-                        .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
+            if (propertyType == typeof(string))
+                return PropTypes.MapBasic;
+            else if (propertyType.IsArray)
+                return PropTypes.MapArray;
+            else if (propertyType.GetInterfaces()
+                                 .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
             {
-                return PropTypes.Enumerable;
+                return PropTypes.MapEnumerable;
             }
             else if (propertyType.IsClass)
-                return PropTypes.Class;
+                return PropTypes.MapClass;
             else if (propertyType.IsEnum)
-                return PropTypes.Enum;
+                return PropTypes.MapEnum;
             else
-                return PropTypes.Basic;
+                return PropTypes.MapBasic;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper.Transformers;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,8 +85,8 @@ namespace AutoMapper
             //        addMethod.Invoke(destList, new object[] { destValue });
             //    }
             //}
-
-            StudentDAO dao = new StudentDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
+            ObjectOfDAO smallDao = new ObjectOfDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
+            StudentDAO dao = new StudentDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" }, smallDao, new List<ObjectOfDAO>() { smallDao });
             Mapper mapper = new Mapper();
             StudentDTO student = mapper.Map<StudentDTO>(dao);
             //StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, "班長");
