@@ -47,33 +47,6 @@ namespace AutoMapper
 
         }
 
-        private object BasicMap(Type destPropType, Type sourcePropType, object data)
-        {
-            Type[] types = { typeof(int), typeof(double), typeof(decimal), typeof(bool), typeof(float), typeof(long), typeof(short) };
-            if (sourcePropType != destPropType)
-            {
-                //Enum轉 Enum / string/int 轉 enum
-                if (destPropType.IsEnum)
-                {
-                    data = Enum.Parse(destPropType, data.ToString());
-                }
-                else if (sourcePropType.IsEnum)
-                {
-                    if (destPropType == typeof(int))
-                        data = (int)(Enum.Parse(sourcePropType, data.ToString()));
-                    else
-                        data = data.ToString();
-                }
-                else if (types.Contains(destPropType))
-                {
-                    var parseMethod = destPropType.GetMethod("Parse", new Type[] { typeof(string) });
-                    data = parseMethod.Invoke(null, new object[] { data.ToString() });
-                }
-                else
-                    data = data.ToString();
-            }
-            return data;
-        }
     }
 
 

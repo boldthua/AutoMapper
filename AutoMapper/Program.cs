@@ -3,6 +3,8 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,19 +87,63 @@ namespace AutoMapper
             //        addMethod.Invoke(destList, new object[] { destValue });
             //    }
             //}
-            ObjectOfDAO smallDao = new ObjectOfDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
-            StudentDAO dao = new StudentDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" }, smallDao, new List<ObjectOfDAO>() { smallDao });
-            Mapper mapper = new Mapper();
-            StudentDTO student = mapper.Map<StudentDTO>(dao);
-            //StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, "班長");
-            //StudentDTO dto2 = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, 2);
-            //StudentDAO student2 = mapper.Map<StudentDAO>(dto);
-            //StudentDAO student3 = mapper.Map<StudentDAO>(dto2);
+            //ObjectOfDAO smallDao = new ObjectOfDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
+            //StudentDAO dao = new StudentDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" }, smallDao, new List<ObjectOfDAO>() { smallDao });
+            //Mapper mapper = new Mapper();
+            //StudentDTO student = mapper.Map<StudentDTO>(dao);
+            ////StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, "班長");
+            ////StudentDTO dto2 = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, 2);
+            ////StudentDAO student2 = mapper.Map<StudentDAO>(dto);
+            ////StudentDAO student3 = mapper.Map<StudentDAO>(dto2);
 
+
+
+            //string propertyName = student.GetType().GetProperty("ID").Name;
+            //var propertyNames = student.GetType().GetProperties().Select(x => x.Name.ToString()).ToList();
+            ////datas.Select(x=>x.Name)
+            ///
+
+
+            List<StudentDAO> studentDAOs = new List<StudentDAO>()
+            {
+                new StudentDAO() {_Height = 100,_ID = "1"},
+                new StudentDAO() {_Height = 200,_ID = "2"},
+                new StudentDAO() {_Height = 300,_ID = "3"},
+                new StudentDAO() {_Height = 400,_ID = "4"},
+                new StudentDAO() {_Height = 500,_ID = "5"},
+            };
+
+            List<StudentDAO> studens = GetStudents(studentDAOs, x => x._Height * 10 > x._Height / 10);
+
+            //Member => 直接傳入類別屬性
+            //Binary => 當今天有多種條件
+            //Conditional => 條件式 (三元運算式)
+            //Constant => 常數使用
+            //MethodCall => 函數呼叫完後的結果
+            //Unary => !x.Enabled  => 一元運算等簡單運算
+            //Parameter
+            //Lambda
+            //New
             Console.ReadKey();
         }
 
+        private static List<StudentDAO> GetStudents<T>(List<StudentDAO> students, Expression<Func<StudentDAO, T>> func)
+        {
+            var member = func.Body as BinaryExpression;
+            List<StudentDAO> studentDAOs = new List<StudentDAO>();
+            var xName = (member.Left as BinaryExpression).Left;
 
+
+            //foreach (StudentDAO student in students)
+            //{
+            //    var target = func.GetMethodInfo().ReturnParameter.Name;
+
+            //    //studentDAOs.Add(func.Invoke(student));
+
+            //}
+            return studentDAOs;
+
+        }
 
         //List<string> source => List<int>
 
