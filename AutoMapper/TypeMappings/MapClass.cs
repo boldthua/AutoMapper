@@ -13,8 +13,8 @@ namespace AutoMapper.TypeMappings
             Mapper mapper = new Mapper();
 
             var mapMethod = typeof(Mapper).GetMethod("Map");
-            var mapGenericMethod = mapMethod.MakeGenericMethod(new Type[] { destPropType });
-            object mappingObject = mapGenericMethod.Invoke(mapper, new object[] { data });
+            var mapGenericMethod = mapMethod.MakeGenericMethod(new Type[] { destPropType, sourcePropType });
+            object mappingObject = mapGenericMethod.Invoke(mapper, new object[] { data, null });
             // object mappingObject = mapper.Map<(Class)destPropType>(data);
             return mappingObject;
         }

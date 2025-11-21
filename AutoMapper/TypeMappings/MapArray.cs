@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,16 @@ namespace AutoMapper.TypeMappings
             Type destElementType = destPropType.GetElementType();
             Type sourceElementType = sourcePropType.GetElementType();
 
-            var parseMethod = destElementType.GetMethod("Parse", new Type[] { sourceElementType });
-
+            PropTypes sourceType = sourceElementType.CheckType();
+            PropTypes destType = destElementType.CheckType();
+            Type type = Type.GetType("AutoMapper.TypeMappings." + sourceType.ToString());
+            AMapping aMapping = (AMapping)Activator.CreateInstance(type);
             Array destArray = Array.CreateInstance(destElementType, length);
 
             for (int i = 0; i < length; i++)
             {
-                var sourceValue = array.GetValue(i);
-                var result = parseMethod.Invoke(null, new object[] { sourceValue });
-                destArray.SetValue(result, i);
+                var sourceValue = aMapping.Map(array.GetValue(i), sourceElementType, destElementType);
+                destArray.SetValue(sourceValue, i);
             }
             return destArray;
         }

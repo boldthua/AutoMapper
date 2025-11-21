@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -89,9 +90,7 @@ namespace AutoMapper
             //}
             //ObjectOfDAO smallDao = new ObjectOfDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
             //StudentDAO dao = new StudentDAO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" }, smallDao, new List<ObjectOfDAO>() { smallDao });
-            //Mapper mapper = new Mapper();
             //StudentDTO student = mapper.Map<StudentDTO>(dao);
-            ////StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, "班長");
             ////StudentDTO dto2 = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, 2);
             ////StudentDAO student2 = mapper.Map<StudentDAO>(dto);
             ////StudentDAO student3 = mapper.Map<StudentDAO>(dto2);
@@ -104,16 +103,16 @@ namespace AutoMapper
             ///
 
 
-            List<StudentDAO> studentDAOs = new List<StudentDAO>()
-            {
-                new StudentDAO() {_Height = 100,_ID = "1"},
-                new StudentDAO() {_Height = 200,_ID = "2"},
-                new StudentDAO() {_Height = 300,_ID = "3"},
-                new StudentDAO() {_Height = 400,_ID = "4"},
-                new StudentDAO() {_Height = 500,_ID = "5"},
-            };
+            //List<StudentDAO> studentDAOs = new List<StudentDAO>()
+            //{
+            //    new StudentDAO() {_Height = 100,ID = "1"},
+            //    new StudentDAO() {_Height = 200,ID = "2"},
+            //    new StudentDAO() {_Height = 300,ID = "3"},
+            //    new StudentDAO() {_Height = 400,ID = "4"},
+            //    new StudentDAO() {_Height = 500,ID = "5"},
+            //};
 
-            List<StudentDAO> studens = GetStudents(studentDAOs, x => x._Height * 10 > x._Height / 10);
+            //List<StudentDAO> studens = GetStudents(studentDAOs, x => x._Height * 10 > x._Height / 10);
 
             //Member => 直接傳入類別屬性
             //Binary => 當今天有多種條件
@@ -124,6 +123,34 @@ namespace AutoMapper
             //Parameter
             //Lambda
             //New
+
+
+
+            Mapper mapper = new Mapper();
+            ObjectOfDTO smallDto = new ObjectOfDTO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
+            StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, 1, new ObservableCollection<int> { 100, 0 }, new int[] { 100, 0 }, smallDto, new List<ObjectOfDTO>() { smallDto });
+
+            StudentDAO student2 = mapper.Map<StudentDAO, StudentDTO>(dto, exp =>
+            {
+                exp.ForMember(x => x.ID, y => y._ID)
+                   .ForMember(x => x.Scores, y => y._Scores);
+            });
+            //  string sourcePropName = ((MemberExpression)getSourcePropName.Body).Name;
+
+
+
+
+
+            //    var config = new MapperConfiguration(cfg =>
+            //    cfg.CreateMap<Card, CardViewModel>()
+            //    .ForMember(x => x.Id, y => y.MapFrom(o => o.CardId))
+            //    .ForMember(x => x.Name, y => y.MapFrom(o => $"{o.Id}: {o.Name}"))
+            //); // 註冊Model間的對映 建立設定檔
+            // 取得來源跟目標的propertyName
+            // ForMember(Expression dest, Expression source)
+            // string destName = ((MemberExpression)dest.Body).Name;
+            // string sourceName = ((MethodExpression)source.Body).Body;
+
             Console.ReadKey();
         }
 
