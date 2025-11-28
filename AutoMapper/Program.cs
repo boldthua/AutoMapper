@@ -133,6 +133,12 @@ namespace AutoMapper
             StudentDAO student2 = mapper.Map<StudentDAO, StudentDTO>(dto, exp =>
             {
                 exp.ForMember(x => x.ID, y => y._ID)
+                   .ForMember(x => x._PhoneNumber, y => 1)
+                   .ForMember(x => x.objectList, y => int.Parse(y._ID))
+                   .ForMember(x => x._Height, y => (string)y._ID)
+                   .ForMember(x => x._Name, y => y._PhoneNumber + "1")
+                   .ForMember(x => x._Position, y => y._ID.GetType() == typeof(int) ? "yes" : "no")
+                   .ForMember(x => x._Weight, y => new StudentDAO())
                    .ForMember(x => x.Scores, y => y._Scores);
             });
             //  string sourcePropName = ((MemberExpression)getSourcePropName.Body).Name;
@@ -153,6 +159,12 @@ namespace AutoMapper
 
             Console.ReadKey();
         }
+
+        private static string Convert(int num)
+        {
+            return num.ToString();
+        }
+
 
         private static List<StudentDAO> GetStudents<T>(List<StudentDAO> students, Expression<Func<StudentDAO, T>> func)
         {

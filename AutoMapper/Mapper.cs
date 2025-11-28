@@ -1,14 +1,17 @@
-﻿using AutoMapper.TypeMappings;
+﻿using AutoMapper.TypeExpressions;
+using AutoMapper.TypeMappings;
 using System;
 using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ExpressionType = AutoMapper.Enums.ExpressionType;
 
 namespace AutoMapper
 {
@@ -23,11 +26,9 @@ namespace AutoMapper
             foreach (var property in sourceProperties)
             {
                 PropertyInfo destProperty = dest.GetType().GetProperty(property.Name);
-
-                StuffProperty<TDestination>(destProperty, property, dest, source);
+                Object obj = property.GetValue(source);
+                StuffProperty<TDestination>(destProperty, dest, obj);
             }
-
-
             // 處理名稱不相同的情況
             // 從Action<Expression>中找到source的name和dest的name，抓出對應的property
             // 把sourceProperty的值塞進destProperty去
@@ -38,26 +39,29 @@ namespace AutoMapper
                 exp.Invoke(mExp);
                 foreach (var set in mExp.mapping)
                 {
-                    PropertyInfo destProperty = dest.GetType().GetProperty(set.Key);
-                    PropertyInfo sourceProperty = source.GetType().GetProperty(set.Value);
+                    PropertyInfo destProperty = set.Key;
 
-                    StuffProperty<TDestination>(destProperty, sourceProperty, dest, source);
+                    Type type = Type.GetType($"AutoMapper.TypeExpressions.{set.Value.type}");
+                    AExpression expression = (AExpression)Activator.CreateInstance(type);
+                    object destValue = expression.GetValue(set.Value.value, source);
+
+                    StuffProperty<TDestination>(destProperty, dest, destValue);
                 }
             }
             return dest;
         }
 
-        private void StuffProperty<TDestination>(PropertyInfo destProperty, PropertyInfo property, TDestination dest, object source)
+        private void StuffProperty<TDestination>(PropertyInfo destProperty, TDestination dest, object source)
         {
             if (destProperty == null)
                 return;
             Type destPropType = destProperty.PropertyType;
-            Type sourcePropType = property.PropertyType;
+            Type sourcePropType = source.GetType();
 
-            object data = property.GetValue(source);
+            object data = source;
             if (destPropType == sourcePropType)
             {
-                destProperty.SetValue(dest, property.GetValue(source));
+                destProperty.SetValue(dest, source);
                 return;
             }
             // 判斷property是否為容器 1.getInterface 找出這個propertyType是實作了哪些interface

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ExpressionType.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Enums\PositionType.cs" />
     <Compile Include="MappingExpression.cs" />
@@ -54,7 +55,16 @@
     <Compile Include="Transformers\StudentDTO.cs" />
     <Compile Include="Transformers\StudentDAO.cs" />
     <Compile Include="Extensions\TypeExtension.cs" />
+    <Compile Include="TypeExpressions\AExpression.cs" />
+    <Compile Include="TypeExpressions\BinaryExpression.cs" />
+    <Compile Include="TypeExpressions\ConditionalExpression.cs" />
+    <Compile Include="TypeExpressions\ConstantExpression.cs" />
+    <Compile Include="TypeExpressions\MemberExpression.cs" />
+    <Compile Include="TypeExpressions\MethodCallExpression.cs" />
+    <Compile Include="TypeExpressions\NewExpression.cs" />
+    <Compile Include="TypeExpressions\UnaryExpression.cs" />
     <Compile Include="TypeMappings\AMapping.cs" />
+    <Compile Include="ExpressionModel.cs" />
     <Compile Include="TypeMappings\MapBasic.cs" />
     <Compile Include="TypeMappings\MapEnum.cs" />
     <Compile Include="TypeMappings\MapClass.cs" />
