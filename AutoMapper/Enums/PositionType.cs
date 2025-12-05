@@ -12,6 +12,8 @@ namespace AutoMapper
         副班長 = 2,
         風紀股長 = 3,
         衛生股長 = 4,
-        抓爬子 = 5
+        抓爬子 = 5,
+        testTrue = 6,
+        testFalse = 7
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="TypeExpressions\MemberExpression.cs" />
     <Compile Include="TypeExpressions\MethodCallExpression.cs" />
     <Compile Include="TypeExpressions\NewExpression.cs" />
+    <Compile Include="TypeExpressions\ParameterExpression.cs" />
     <Compile Include="TypeExpressions\UnaryExpression.cs" />
     <Compile Include="TypeMappings\AMapping.cs" />
     <Compile Include="ExpressionModel.cs" />

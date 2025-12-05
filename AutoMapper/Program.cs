@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -129,16 +130,16 @@ namespace AutoMapper
             Mapper mapper = new Mapper();
             ObjectOfDTO smallDto = new ObjectOfDTO("1", "Leo", "0933xxxxxx", 180, 60, PositionType.班長, new List<string> { "100", "0" }, new string[] { "100", "0" });
             StudentDTO dto = new StudentDTO("1", "Leo", "0933xxxxxx", 180, 60, 1, new ObservableCollection<int> { 100, 0 }, new int[] { 100, 0 }, smallDto, new List<ObjectOfDTO>() { smallDto });
-
+            List<string> test = new List<string> { "1" };
             StudentDAO student2 = mapper.Map<StudentDAO, StudentDTO>(dto, exp =>
             {
                 exp.ForMember(x => x.ID, y => y._ID)
                    .ForMember(x => x._PhoneNumber, y => 1)
-                   .ForMember(x => x.objectList, y => int.Parse(y._ID))
+                   .ForMember(x => x._Subjects, y => test.ToArray())
                    .ForMember(x => x._Height, y => (string)y._ID)
                    .ForMember(x => x._Name, y => y._PhoneNumber + "1")
-                   .ForMember(x => x._Position, y => y._ID.GetType() == typeof(int) ? "yes" : "no")
-                   .ForMember(x => x._Weight, y => new StudentDAO())
+                   .ForMember(x => x._Position, y => y._ID.GetType() == typeof(int) ? PositionType.testTrue : PositionType.testFalse)
+                   .ForMember(x => x._ObjectTest, y => new StudentDAO())
                    .ForMember(x => x.Scores, y => y._Scores);
             });
             //  string sourcePropName = ((MemberExpression)getSourcePropName.Body).Name;

@@ -14,6 +14,7 @@ namespace AutoMapper.Enums
         UnaryExpression = 3,
         BinaryExpression = 4,
         ConditionalExpression = 5,
-        NewExpression = 6
+        NewExpression = 6,
+        Parameter = 7
     }
 }

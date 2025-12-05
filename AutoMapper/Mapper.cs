@@ -27,6 +27,8 @@ namespace AutoMapper
             {
                 PropertyInfo destProperty = dest.GetType().GetProperty(property.Name);
                 Object obj = property.GetValue(source);
+                if (obj == null)
+                    obj = property;
                 StuffProperty<TDestination>(destProperty, dest, obj);
             }
             // 處理名稱不相同的情況
@@ -56,8 +58,14 @@ namespace AutoMapper
             if (destProperty == null)
                 return;
             Type destPropType = destProperty.PropertyType;
-            Type sourcePropType = source.GetType();
-
+            Type sourcePropType = null;
+            if (source is PropertyInfo prop)
+            {
+                destProperty.SetValue(dest, null);
+                return;
+            }
+            else
+                sourcePropType = source.GetType();
             object data = source;
             if (destPropType == sourcePropType)
             {

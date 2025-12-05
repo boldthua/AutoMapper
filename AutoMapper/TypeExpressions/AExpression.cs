@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AutoMapper.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ExpressionType = AutoMapper.Enums.ExpressionType;
@@ -15,45 +17,36 @@ namespace AutoMapper.TypeExpressions
 
         public static object GetExpressionValue(Expression expression, Object source)
         {
-            Expression sourceProp = null;
-            ExpressionType expType = default;
-            if (expression is System.Linq.Expressions.MemberExpression memberExpression)
-            {
-                return new MemberExpression().GetValue(expression, source);
-            }
-            else if (expression is System.Linq.Expressions.ConstantExpression constantExpression)
-            {
-                sourceProp = constantExpression;
-                expType = ExpressionType.ConstantExpression;
-            }
-            else if (expression is System.Linq.Expressions.MethodCallExpression methodCallExpression)
-            {
-                sourceProp = methodCallExpression;
-                expType = ExpressionType.MethodCallExpression;
-            }
-            else if (expression is System.Linq.Expressions.UnaryExpression unaryExpression)
-            {
-                sourceProp = unaryExpression;
-                expType = ExpressionType.UnaryExpression;
-            }
-            else if (expression is System.Linq.Expressions.BinaryExpression binaryExpression)
-            {
-                sourceProp = binaryExpression;
-                expType = ExpressionType.BinaryExpression;
-            }
-            else if (expression is System.Linq.Expressions.ConditionalExpression conditionalExpression)
-            {
-                sourceProp = conditionalExpression;
-                expType = ExpressionType.ConditionalExpression;
-            }
-            else if (expression is System.Linq.Expressions.NewExpression newExpression)
-            {
-                sourceProp = newExpression;
-                expType = ExpressionType.NewExpression;
-            }
+            Type targetType = expression.GetType();
+            var baseTypes = GetAllBaseTypes(targetType);
+            Type expressionType = Assembly.GetExecutingAssembly().DefinedTypes.FirstOrDefault(x => baseTypes.Contains(x.Name));
+            AExpression rExpression = (AExpression)Activator.CreateInstance(expressionType);
 
-            return (expType, sourceProp);
+            return rExpression.GetValue(expression, source);
         }
+
+        public static KeyValuePair<ExpressionType, Expression> CheckExpressionType(Expression expression)
+        {
+
+            Type targetType = expression.GetType();
+            var baseTypes = GetAllBaseTypes(targetType);
+            var expType = Assembly.GetExecutingAssembly().DefinedTypes.FirstOrDefault(x => baseTypes.Contains(x.Name));
+            var rExpression = (ExpressionType)Enum.Parse(typeof(ExpressionType), expType.Name);
+            KeyValuePair<ExpressionType, Expression> result = new KeyValuePair<ExpressionType, Expression>(rExpression, expression);
+            return result;
+        }
+
+        public static IEnumerable<string> GetAllBaseTypes(Type type)
+        {
+            yield return type.Name;
+            var current = type.BaseType;
+            while (current != null)
+            {
+                yield return current.Name;
+                current = current.BaseType;
+            }
+        }
+
     }
 
 
