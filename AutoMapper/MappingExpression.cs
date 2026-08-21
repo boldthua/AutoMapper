@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using ExpressionType = AutoMapper.Enums.ExpressionType;
 namespace AutoMapper
 {
-    internal class MappingExpression<TDestination, TSource> where TDestination : class, new() where TSource : class, new()
+    public class MappingExpression<TDestination, TSource> where TDestination : class, new() where TSource : class, new()
     {
         public Dictionary<PropertyInfo, ExpressionModel> mapping = new Dictionary<PropertyInfo, ExpressionModel>();
         // propertyinfo是dest , object是source

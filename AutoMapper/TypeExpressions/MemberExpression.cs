@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AutoMapper.TypeExpressions
 {
-    internal class MemberExpression : AExpression
+    public class MemberExpression : AExpression
     {
         public override object GetValue(Expression expression, object source)
         {

@@ -11,7 +11,7 @@ using ExpressionType = AutoMapper.Enums.ExpressionType;
 
 namespace AutoMapper.TypeExpressions
 {
-    internal abstract class AExpression
+    public abstract class AExpression
     {
         public abstract Object GetValue(Expression expression, Object source);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoMapper.Enums
 {
-    internal enum ExpressionType
+    public enum ExpressionType
     {
         MemberExpression = 0,
         ConstantExpression = 1,

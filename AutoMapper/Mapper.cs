@@ -15,7 +15,7 @@ using ExpressionType = AutoMapper.Enums.ExpressionType;
 
 namespace AutoMapper
 {
-    internal class Mapper
+    public class Mapper
     {
         public TDestination Map<TDestination, TSource>(object source, Action<MappingExpression<TDestination, TSource>> exp = null) where TDestination : class, new() where TSource : class, new()
         {

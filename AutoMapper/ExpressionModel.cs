@@ -8,7 +8,7 @@ using ExpressionType = AutoMapper.Enums.ExpressionType;
 
 namespace AutoMapper
 {
-    internal class ExpressionModel
+    public class ExpressionModel
     {
         public ExpressionType type { get; set; }
         public Expression value { get; set; }
